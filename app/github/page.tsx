@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Panel } from "@/components/design/Panel";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { Badge } from "@/components/shared/Badge";
 import { EmptyState } from "@/components/shared/EmptyState";
@@ -25,7 +26,7 @@ export default async function GitHubPage() {
       {snapshot.repositories.length > 0 ? (
         <ul className="mt-6 grid gap-3">
           {snapshot.repositories.map((repo) => (
-            <li key={repo.url} className="rounded-lg border border-[var(--border)] p-4">
+            <Panel as="li" key={repo.url} className="p-4">
               <div className="flex flex-wrap items-center gap-2">
                 <h2 className="font-medium">
                   <Link href={repo.url} rel="noreferrer" target="_blank">
@@ -37,7 +38,7 @@ export default async function GitHubPage() {
               <p className="mt-2 text-sm text-[var(--muted)]">
                 {repo.description ?? "No description."}
               </p>
-            </li>
+            </Panel>
           ))}
         </ul>
       ) : snapshot.source === "live" ? (

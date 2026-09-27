@@ -1,13 +1,17 @@
-import { type ReactNode } from "react";
+import { type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface BadgeProps {
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   children: ReactNode;
   tone?: "neutral" | "status";
-  className?: string;
 }
 
-export function Badge({ children, tone = "neutral", className }: BadgeProps) {
+export function Badge({
+  children,
+  tone = "neutral",
+  className,
+  ...props
+}: BadgeProps) {
   return (
     <span
       className={cn(
@@ -17,6 +21,7 @@ export function Badge({ children, tone = "neutral", className }: BadgeProps) {
           : "border-[var(--border)] text-[var(--muted)]",
         className,
       )}
+      {...props}
     >
       {children}
     </span>

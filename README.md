@@ -6,18 +6,20 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 1 — Foundation** is in place:
+**Phase 2 — Design system** is in place (on top of Phase 1).
 
-- Next.js App Router, TypeScript, Tailwind CSS
-- Domain types and static seed data
-- Repository interfaces (UI does not import project files directly)
-- Public routes, project slugs, metadata
-- Health and read APIs
-- AI provider interface (disabled)
-- GitHub service with fallback
-- Unit tests for retrieval, search, and graph integrity
+Engineering docs live in [`docs/`](docs/):
 
-Later phases add the desktop shell, window manager, architecture explorer, city map, and production hardening. See the roadmap below.
+- [MASTER_SPEC.md](docs/MASTER_SPEC.md)
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- [DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md)
+- [DATA_MODEL.md](docs/DATA_MODEL.md)
+- [AI_ARCHITECTURE.md](docs/AI_ARCHITECTURE.md)
+- [DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md)
+- [SECURITY.md](docs/SECURITY.md)
+- [DEPLOYMENT.md](docs/DEPLOYMENT.md)
+
+Later phases add the desktop shell, explorers, and production hardening. See [docs/DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md).
 
 ## Architecture
 
@@ -59,9 +61,10 @@ Presentation
 
 ```
 app/                 Public routes and API
-components/          Layout + shared primitives (OS UI in later phases)
+components/          Layout, design primitives, shared UI
+docs/                Spec and architecture
 data/                Source of truth for v1
-lib/                 Services, search, repositories, AI/GitHub boundaries
+lib/                 Services, search, repositories, tokens
 hooks/               Client interaction hooks
 types/               Domain types
 prisma/schema.prisma Future database model
@@ -117,8 +120,8 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 
 ## Roadmap
 
-1. Foundation (this phase)
-2. Design system
+1. Foundation (done)
+2. Design system (done)
 3. THARUN OS desktop + boot
 4. Mission Control density
 5. Project Lab filters

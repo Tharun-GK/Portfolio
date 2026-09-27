@@ -14,6 +14,15 @@ export const PUBLIC_ROUTES = [
   { href: "/contact", label: "Contact", command: "open contact" },
 ] as const;
 
+export const MOBILE_ROUTES = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/research", label: "Research" },
+  { href: "/experience", label: "Experience" },
+  { href: "/resume", label: "Resume" },
+  { href: "/contact", label: "Contact" },
+] as const;
+
 export const PROJECT_CATEGORY_LABEL: Record<string, string> = {
   "ai-ml": "AI/ML",
   "full-stack": "Full Stack",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Panel } from "@/components/design/Panel";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { city } from "@/data/city";
 
@@ -10,7 +11,7 @@ export default function CityPage() {
     >
       <ul className="grid gap-4 md:grid-cols-2">
         {city.districts.map((district) => (
-          <li key={district.id} className="rounded-lg border border-[var(--border)] p-5">
+          <Panel as="li" key={district.id}>
             <h2 className="font-medium">{district.name}</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">{district.summary}</p>
             <ul className="mt-4 grid gap-2">
@@ -22,7 +23,7 @@ export default function CityPage() {
                 </li>
               ))}
             </ul>
-          </li>
+          </Panel>
         ))}
       </ul>
     </PublicShell>

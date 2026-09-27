@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Panel } from "@/components/design/Panel";
+import { StatusBadge } from "@/components/design/StatusBadge";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { Badge } from "@/components/shared/Badge";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { PROJECT_CATEGORY_LABEL } from "@/lib/constants";
+import { getArchitectureNodeColor } from "@/lib/design-tokens";
 import { getProjectRepository } from "@/lib/repositories";
 import { getSiteUrl } from "@/lib/utils";
 
@@ -62,9 +66,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   return (
     <PublicShell title={project.title} description={project.shortDescription}>
       <div className="flex flex-wrap gap-2">
-        <Badge tone="status">{project.status}</Badge>
+        <StatusBadge status={project.status} />
         {project.categories.map((category) => (
-          <Badge key={category}>{category}</Badge>
+          <Badge key={category}>
+            {PROJECT_CATEGORY_LABEL[category] ?? category}
+          </Badge>
         ))}
       </div>
 
@@ -91,10 +97,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <h2 className="text-lg font-medium">Core features</h2>
           <ul className="mt-3 grid gap-3">
             {project.features.map((feature) => (
-              <li key={feature.title} className="rounded-lg border border-[var(--border)] p-4">
+              <Panel as="li" key={feature.title} className="p-4">
                 <p className="font-medium">{feature.title}</p>
                 <p className="mt-1 text-sm text-[var(--muted)]">{feature.description}</p>
-              </li>
+              </Panel>
             ))}
           </ul>
         </section>
@@ -113,7 +119,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           {architecture ? (
             <ol className="mt-3 grid gap-2">
               {architecture.nodes.map((node) => (
-                <li key={node.id} className="rounded-lg border border-[var(--border)] p-3">
+                <li
+                  key={node.id}
+                  className="rounded-[var(--radius-md)] border border-[var(--border)] p-3"
+                  style={{ borderLeftColor: getArchitectureNodeColor(node.type), borderLeftWidth: 3 }}
+                >
                   <p className="font-medium">{node.label}</p>
                   <p className="text-sm text-[var(--muted)]">{node.purpose}</p>
                 </li>
@@ -131,10 +141,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           {useCases ? (
             <ul className="mt-3 grid gap-3">
               {useCases.useCases.map((item) => (
-                <li key={item.id} className="rounded-lg border border-[var(--border)] p-3">
+                <Panel as="li" key={item.id} className="p-3">
                   <p className="font-medium">{item.name}</p>
                   <p className="text-sm text-[var(--muted)]">{item.description}</p>
-                </li>
+                </Panel>
               ))}
             </ul>
           ) : (
