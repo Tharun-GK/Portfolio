@@ -124,7 +124,6 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 2. Design system (done)
 3. THARUN OS desktop + boot (done)
 4. Mission Control density (done)
-4. Mission Control density
 5. Project Lab filters
 6. Richer project tabs (still `/projects/[slug]`)
 7. Architecture explorer
