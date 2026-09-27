@@ -1,0 +1,73 @@
+import type { UseCaseModel } from "@/types/use-case";
+
+export const bookmyshiftUseCases: UseCaseModel = {
+  id: "uc-bookmyshift",
+  projectSlug: "bookmyshift",
+  title: "BookMyShift use cases",
+  description: "Worker and employer journeys from verification through rating.",
+  actors: [
+    { id: "worker", name: "Worker" },
+    { id: "employer", name: "Employer" },
+    { id: "system", name: "System" },
+  ],
+  useCases: [
+    {
+      id: "verify-identity",
+      name: "Verify Identity",
+      description: "Worker or employer completes verification.",
+      actorIds: ["worker", "employer", "system"],
+      preconditions: ["Account exists."],
+      mainFlow: ["Actor submits evidence.", "System records verified state."],
+      output: "Verified account.",
+    },
+    {
+      id: "post-job",
+      name: "Post Job",
+      description: "Employer publishes a shift.",
+      actorIds: ["employer"],
+      preconditions: ["Employer is verified."],
+      mainFlow: ["Employer writes job details.", "Listing becomes discoverable."],
+      output: "Job listing.",
+    },
+    {
+      id: "discover-apply",
+      name: "Discover and Apply",
+      description: "Worker finds a job and applies.",
+      actorIds: ["worker"],
+      preconditions: ["Worker is verified.", "A listing is open."],
+      mainFlow: ["Worker browses jobs.", "Worker submits an application."],
+      output: "Application.",
+    },
+    {
+      id: "select-worker",
+      name: "Select Worker",
+      description: "Employer reviews applicants and hires.",
+      actorIds: ["employer"],
+      preconditions: ["Applications exist."],
+      mainFlow: ["Employer reviews applicants.", "A hired group is created."],
+      output: "Hired group.",
+    },
+    {
+      id: "complete-and-pay",
+      name: "Complete Work and Confirm Payment",
+      description: "Work is completed, payment is confirmed, and ratings are captured.",
+      actorIds: ["worker", "employer", "system"],
+      preconditions: ["Hired group is active."],
+      mainFlow: [
+        "Work is marked complete.",
+        "Payment confirmation is recorded.",
+        "Both sides may rate.",
+      ],
+      output: "Completion, payment record, ratings.",
+    },
+  ],
+  relationships: [
+    { id: "r1", actorId: "worker", useCaseId: "verify-identity", kind: "associates" },
+    { id: "r2", actorId: "employer", useCaseId: "verify-identity", kind: "associates" },
+    { id: "r3", actorId: "employer", useCaseId: "post-job", kind: "associates" },
+    { id: "r4", actorId: "worker", useCaseId: "discover-apply", kind: "associates" },
+    { id: "r5", actorId: "employer", useCaseId: "select-worker", kind: "associates" },
+    { id: "r6", actorId: "worker", useCaseId: "complete-and-pay", kind: "associates" },
+    { id: "r7", actorId: "employer", useCaseId: "complete-and-pay", kind: "associates" },
+  ],
+};

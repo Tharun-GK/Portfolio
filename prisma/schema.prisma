@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Version 1 does not connect this schema.
+// It documents the target relational model for a future Prisma migration.
+
+model User {
+  id        String   @id @default(cuid())
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  status       String
+  category     String
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  technologies ProjectTechnology[]
+  features     ProjectFeature[]
+  architecture Architecture?
+  useCases     UseCase[]
+  activities   Activity[]
+}
+
+model ProjectTechnology {
+  id        String  @id @default(cuid())
+  name      String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model ProjectFeature {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id])
+}
+
+model Architecture {
+  id        String             @id @default(cuid())
+  title     String
+  projectId String             @unique
+  project   Project            @relation(fields: [projectId], references: [id])
+  nodes     ArchitectureNode[]
+  edges     ArchitectureEdge[]
+}
+
+model ArchitectureNode {
+  id             String       @id @default(cuid())
+  key            String
+  label          String
+  architectureId String
+  architecture   Architecture @relation(fields: [architectureId], references: [id])
+}
+
+model ArchitectureEdge {
+  id             String       @id @default(cuid())
+  source         String
+  target         String
+  architectureId String
+  architecture   Architecture @relation(fields: [architectureId], references: [id])
+}
+
+model UseCase {
+  id        String  @id @default(cuid())
+  name      String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model Actor {
+  id   String @id @default(cuid())
+  name String
+}
+
+model Research {
+  id    String @id @default(cuid())
+  title String
+}
+
+model Experience {
+  id           String @id @default(cuid())
+  organization String
+  role         String
+}
+
+model Activity {
+  id        String  @id @default(cuid())
+  type      String
+  title     String
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id])
+}
+
+model Skill {
+  id   String @id @default(cuid())
+  name String
+}
+
+model CityDistrict {
+  id        String         @id @default(cuid())
+  name      String
+  buildings CityBuilding[]
+}
+
+model CityBuilding {
+  id         String       @id @default(cuid())
+  name       String
+  districtId String
+  district   CityDistrict @relation(fields: [districtId], references: [id])
+}
+
+model GitHubRepository {
+  id   String @id @default(cuid())
+  name String
+}
+
+model AIInsight {
+  id      String @id @default(cuid())
+  summary String
+}

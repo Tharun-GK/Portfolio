@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #121417;
+  --panel: #1a1d22;
+  --panel-hover: #22262c;
+  --panel-strong: #0e1013;
+  --text: #e7e4dc;
+  --muted: #9aa09a;
+  --border: #2a2f36;
+  --accent: #c4b58a;
+  --focus: #c4b58a;
+  --status-planning: #8a93a3;
+  --status-building: #c4b58a;
+  --status-testing: #8fb3a1;
+  --status-active: #7ea48a;
+  --status-completed: #6f8f7c;
+  --status-archived: #6d7178;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
