@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { type ReactNode } from "react";
+import { OsChrome } from "@/components/os/OsChrome";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
 import { getSiteUrl } from "@/lib/utils";
 import "./globals.css";
@@ -38,7 +39,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${mono.variable} antialiased`}>{children}</body>
+      <body className={`${sans.variable} ${mono.variable} antialiased`}>
+        <OsChrome>{children}</OsChrome>
+      </body>
     </html>
   );
 }

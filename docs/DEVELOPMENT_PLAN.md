@@ -14,9 +14,9 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | Phase | Status | Scope |
 | --- | --- | --- |
 | 1 Foundation | Done | Next.js, types, data, repositories, public routes, APIs, tests |
-| 2 Design system | This phase | Tokens, primitives, docs, mobile nav, status semantics |
-| 3 Desktop | Next | Boot (short, skippable), desktop, taskbar, command palette UI, windows on home |
-| 4 Mission Control | Planned | Denser recruiter IA using existing data |
+| 2 Design system | Done | Tokens, primitives, docs, mobile nav, status semantics |
+| 3 Desktop | Done | Boot (short, skippable), desktop, taskbar, command palette UI, windows on home |
+| 4 Mission Control | Next | Denser recruiter IA using existing data |
 | 5 Project Lab | Planned | Filters, sort, search UI |
 | 6 Project detail | Planned | Tabs; still `/projects/[slug]` |
 | 7 Architecture explorer | Planned | SVG/Framer (and React Flow only if needed) |
@@ -31,9 +31,9 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 16 Testing | Planned | Integration + e2e |
 | 17 Production | Planned | Vercel env, production URLs |
 
-## Phase 3 dependency decision (pending that phase)
+## Phase 3 dependency decision
 
-Framer Motion is in the locked stack for **semantic** motion (boot, windows, data flow). It should be added in Phase 3 when the desktop exists, not earlier for decoration. React Flow should wait until the architecture explorer cannot be done cleanly with SVG.
+Framer Motion is installed for **semantic** boot/window opacity only. React Flow is still not added.
 
 ## Local loop
 

@@ -1,20 +1,46 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { searchPortfolio, type SearchResult } from "@/lib/search";
+import type { CommandHit } from "@/lib/commands";
+
+type Resolver = (query: string, limit?: number) => CommandHit[];
 
 export function useCommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [resolver, setResolver] = useState<Resolver | null>(null);
 
-  const results: SearchResult[] = useMemo(
-    () => (query.trim() ? searchPortfolio(query) : []),
-    [query],
+  const results: CommandHit[] = useMemo(
+    () => (resolver ? resolver(query) : []),
+    [query, resolver],
   );
 
   const toggle = useCallback(() => {
     setOpen((current) => !current);
   }, []);
+
+  const close = useCallback(() => {
+    setOpen(false);
+    setQuery("");
+  }, []);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    let cancelled = false;
+
+    void import("@/lib/commands").then((module) => {
+      if (!cancelled) {
+        setResolver(() => module.resolveCommandQuery);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -23,21 +49,24 @@ export function useCommandPalette() {
       const isSlash =
         event.key === "/" &&
         !(event.target instanceof HTMLInputElement) &&
-        !(event.target instanceof HTMLTextAreaElement);
+        !(event.target instanceof HTMLTextAreaElement) &&
+        !(event.target instanceof HTMLSelectElement);
 
-      if (isPalette || isSlash) {
+      if (isPalette || (isSlash && !open)) {
         event.preventDefault();
         setOpen(true);
       }
 
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && open) {
+        event.preventDefault();
         setOpen(false);
+        setQuery("");
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  }, [open]);
 
   return {
     open,
@@ -46,5 +75,6 @@ export function useCommandPalette() {
     setQuery,
     results,
     toggle,
+    close,
   };
 }

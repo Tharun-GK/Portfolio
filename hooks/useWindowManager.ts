@@ -8,8 +8,11 @@ export interface ManagedWindow {
   id: string;
   title: string;
   href: string;
+  appId: string;
   state: WindowState;
   zIndex: number;
+  x: number;
+  y: number;
 }
 
 interface WindowManagerStore {
@@ -44,30 +47,40 @@ function nextZ(windows: ManagedWindow[]): number {
 export function useWindowManager() {
   const snapshot = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 
-  const openWindow = useCallback((window: Omit<ManagedWindow, "state" | "zIndex">) => {
-    const existing = store.windows.find((item) => item.id === window.id);
-    if (existing) {
+  const openWindow = useCallback(
+    (window: Omit<ManagedWindow, "state" | "zIndex" | "x" | "y"> & { x?: number; y?: number }) => {
+      const existing = store.windows.find((item) => item.id === window.id);
+      if (existing) {
+        store = {
+          windows: store.windows.map((item) =>
+            item.id === window.id
+              ? { ...item, state: "open", zIndex: nextZ(store.windows) }
+              : item,
+          ),
+          focusedId: window.id,
+        };
+        emit();
+        return;
+      }
+
+      const offset = store.windows.length * 24;
       store = {
-        windows: store.windows.map((item) =>
-          item.id === window.id
-            ? { ...item, state: "open", zIndex: nextZ(store.windows) }
-            : item,
-        ),
+        windows: [
+          ...store.windows,
+          {
+            ...window,
+            state: "open",
+            zIndex: nextZ(store.windows),
+            x: window.x ?? 48 + offset,
+            y: window.y ?? 48 + offset,
+          },
+        ],
         focusedId: window.id,
       };
       emit();
-      return;
-    }
-
-    store = {
-      windows: [
-        ...store.windows,
-        { ...window, state: "open", zIndex: nextZ(store.windows) },
-      ],
-      focusedId: window.id,
-    };
-    emit();
-  }, []);
+    },
+    [],
+  );
 
   const closeWindow = useCallback((id: string) => {
     store = {
@@ -103,12 +116,32 @@ export function useWindowManager() {
     emit();
   }, []);
 
+  const restoreWindow = useCallback((id: string) => {
+    store = {
+      windows: store.windows.map((item) =>
+        item.id === id
+          ? { ...item, state: "open", zIndex: nextZ(store.windows) }
+          : item,
+      ),
+      focusedId: id,
+    };
+    emit();
+  }, []);
+
   const focusWindow = useCallback((id: string) => {
     store = {
       windows: store.windows.map((item) =>
         item.id === id ? { ...item, zIndex: nextZ(store.windows), state: "open" } : item,
       ),
       focusedId: id,
+    };
+    emit();
+  }, []);
+
+  const moveWindow = useCallback((id: string, x: number, y: number) => {
+    store = {
+      windows: store.windows.map((item) => (item.id === id ? { ...item, x, y } : item)),
+      focusedId: store.focusedId,
     };
     emit();
   }, []);
@@ -120,6 +153,8 @@ export function useWindowManager() {
     closeWindow,
     minimizeWindow,
     maximizeWindow,
+    restoreWindow,
     focusWindow,
+    moveWindow,
   };
 }

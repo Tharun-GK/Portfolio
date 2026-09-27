@@ -114,7 +114,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             ))}
           </ul>
         </section>
-        <section>
+        <section id="architecture">
           <h2 className="text-lg font-medium">Architecture</h2>
           {architecture ? (
             <ol className="mt-3 grid gap-2">
@@ -136,7 +136,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             />
           )}
         </section>
-        <section>
+        <section id="use-cases">
           <h2 className="text-lg font-medium">Use cases</h2>
           {useCases ? (
             <ul className="mt-3 grid gap-3">
