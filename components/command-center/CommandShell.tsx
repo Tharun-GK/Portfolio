@@ -10,16 +10,18 @@ export function CommandShell({
   children,
   title,
   kicker,
+  atmosphere = false,
 }: {
   children: ReactNode;
   title: string;
   kicker: string;
+  atmosphere?: boolean;
 }) {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="command-center mc-hud relative min-h-screen overflow-x-hidden">
-      <CommandAtmosphere />
+      {atmosphere ? <CommandAtmosphere /> : null}
       <a
         href="#command-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-[var(--panel)] focus:px-3 focus:py-2"
@@ -59,7 +61,7 @@ export function CommandShell({
             </button>
             <div>
               <p className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-[var(--accent)]">
-                <CommandIcon name="mission" className="h-3.5 w-3.5" />
+                <CommandIcon name={atmosphere ? "home" : "mission"} className="h-3.5 w-3.5" />
                 {title}
               </p>
               <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--muted)]">

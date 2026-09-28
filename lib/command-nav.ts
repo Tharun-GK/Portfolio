@@ -19,9 +19,8 @@ export interface CommandNavItem {
 }
 
 /**
- * Dashboard destinations. Every href maps to an existing app route
- * (hash targets stay on those pages). Skills/Education/About have no
- * dedicated pages — they use Mission Control stack and Resume.
+ * Dashboard destinations. Skills live on Home (`/#stack`);
+ * Education and Resume/About use the existing Resume route.
  */
 export const COMMAND_NAV: CommandNavItem[] = [
   { href: "/", label: "Home", icon: "home" },
@@ -30,7 +29,7 @@ export const COMMAND_NAV: CommandNavItem[] = [
   { href: "/projects", label: "Project Lab", icon: "projects" },
   { href: "/research", label: "Research Lab", icon: "research" },
   { href: "/experience", label: "Experience", icon: "experience" },
-  { href: "/mission-control#stack", label: "Skills & Tech", icon: "skills" },
+  { href: "/#stack", label: "Skills & Tech", icon: "skills" },
   { href: "/resume", label: "Education", icon: "education" },
   { href: "/resume", label: "Resume / About", icon: "about" },
   { href: "/contact", label: "Contact", icon: "contact" },
@@ -61,11 +60,11 @@ export function isCommandNavActive(
   }
 
   if (path === "/") {
-    return pathname === "/";
+    return pathname === "/" && currentHash !== "stack";
   }
 
   if (path === "/mission-control") {
-    return pathname === "/mission-control" && currentHash !== "stack";
+    return pathname === "/mission-control";
   }
 
   if (path === "/projects") {

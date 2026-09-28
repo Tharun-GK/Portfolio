@@ -107,7 +107,7 @@ export function searchPortfolio(query: string, limit = 12): SearchResult[] {
         kind: "skill",
         title: skill.name,
         description: skill.group,
-        href: "/mission-control",
+        href: "/#stack",
         score,
       });
     }

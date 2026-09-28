@@ -66,11 +66,14 @@ describe("command navigation", () => {
     expect(commandNavUsesExistingRoutes()).toBe(true);
   });
 
-  it("marks mission control from the real pathname", () => {
+  it("marks home and mission control from the real pathname", () => {
+    expect(isCommandNavActive("/", "/")).toBe(true);
+    expect(isCommandNavActive("/", "/mission-control")).toBe(false);
+    expect(isCommandNavActive("/mission-control", "/")).toBe(false);
     expect(isCommandNavActive("/mission-control", "/mission-control")).toBe(true);
     expect(isCommandNavActive("/projects", "/projects/bookmyshift")).toBe(true);
     expect(isCommandNavActive("/research", "/mission-control")).toBe(false);
-    expect(isCommandNavActive("/mission-control#stack", "/mission-control", "stack")).toBe(true);
-    expect(isCommandNavActive("/mission-control", "/mission-control", "stack")).toBe(false);
+    expect(isCommandNavActive("/#stack", "/", "stack")).toBe(true);
+    expect(isCommandNavActive("/", "/", "stack")).toBe(false);
   });
 });

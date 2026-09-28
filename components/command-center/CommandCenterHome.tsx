@@ -10,7 +10,7 @@ import { PROJECT_STATUS_LABEL } from "@/lib/design-tokens";
 import { projectCategoryCaption, type MissionControlSnapshot } from "@/lib/mission-control";
 import { profile } from "@/data/profile";
 
-interface MissionDashboardProps {
+interface CommandCenterHomeProps {
   snapshot: MissionControlSnapshot;
 }
 
@@ -24,7 +24,7 @@ const QUICK_LINKS = [
   { href: "/contact", label: "Get in Touch" },
 ] as const;
 
-export function MissionDashboard({ snapshot }: MissionDashboardProps) {
+export function CommandCenterHome({ snapshot }: CommandCenterHomeProps) {
   const { brief, projects, github, skills } = snapshot;
 
   return (
