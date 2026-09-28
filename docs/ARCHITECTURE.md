@@ -44,7 +44,7 @@ StaticProjectRepository
 /projects/[slug]  +  Mission Control  +  search  +  city locations
 ```
 
-Architecture and use-case **graphs are data**. Visual explorers (later) consume the same graphs.
+Architecture and use-case **graphs are data**. `ArchitectureViewer` / `UseCaseViewer` consume those graphs. Interactive explorers (later) reuse the same data.
 
 ## Window manager
 

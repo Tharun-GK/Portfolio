@@ -20,8 +20,8 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 5 Project Lab | Done | Filters, sort, search UI |
 | 5.1 OS repair | Done | Window lifecycle fix + command-center desktop |
 | 5.2 City navigation | Done | Single location model; optional map + mobile district selector |
-| 6 Project detail | Next | Tabs; still `/projects/[slug]` |
-| 7 Architecture explorer | Planned | SVG/Framer (and React Flow only if needed) |
+| 6 Project detail | Done | Tabs on `/projects/[slug]`; hash deep links |
+| 7 Architecture explorer | Next | Interactive graph; still project-agnostic |
 | 8 Use-case explorer | Planned | Data-driven diagram / mobile cards |
 | 9 Tharun City | Started | Location map on `/city`; no 3D; not the only path |
 | 10 Research / experience | Planned | Timeline depth; still data-driven |

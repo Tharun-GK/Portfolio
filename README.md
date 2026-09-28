@@ -6,7 +6,7 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 5.2 — City navigation** is in place (`/city` from `cityLocations`). Phase 6 (project tabs) is not started.
+**Phase 6 — Project detail tabs** is in place on `/projects/[slug]`. Phase 7 (interactive architecture explorer) is not started.
 
 Engineering docs live in [`docs/`](docs/):
 
@@ -38,7 +38,7 @@ Adding a project should mean new data (and optional assets), not a new page comp
 3. `data/use-cases/<slug>.ts`
 4. Assets under `public/images/projects/<slug>/`
 
-`ArchitectureViewer` and `UseCaseViewer` (later phases) must remain project-agnostic.
+`ArchitectureViewer` and `UseCaseViewer` consume graphs from the repository. They must stay project-agnostic. Interactive playback is Phase 7+.
 
 ```
 Presentation
@@ -127,7 +127,7 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 5. Project Lab filters (done)
 5.1 Window manager repair + command-center desktop (done)
 5.2 City navigation from one location model (done)
-6. Richer project tabs (still `/projects/[slug]`)
+6. Project detail tabs (done)
 7. Architecture explorer
 8. Use-case explorer
 9. Tharun City map

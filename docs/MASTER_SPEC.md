@@ -126,7 +126,7 @@ Product-style catalog with filters and search (later phases). Cards from project
 
 ### Project detail
 
-Hero through related projects; tabs later (Overview, Architecture, Use Cases, Data Flow, Technology, Results). Content from data.
+Hero through related projects; tabs (Overview, Architecture, Use Cases, Data Flow, Technology, Results). Content from data. Hashes `#architecture` and `#use-cases` remain stable.
 
 ### Architecture explorer
 
