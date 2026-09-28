@@ -22,7 +22,7 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 5.2 City navigation | Done | Single location model; optional map + mobile district selector |
 | 6 Project detail | Done | Tabs on `/projects/[slug]`; hash deep links |
 | 7 Architecture explorer | Done | SVG graph, select, play/pause/reset/zoom/fit; no React Flow |
-| 8 Use-case explorer | Next | Data-driven diagram / mobile cards |
+| 8 Use-case explorer | Done | SVG diagram on desktop; cards on mobile; click for flow details |
 | 9 Tharun City | Started | Location map on `/city`; no 3D; not the only path |
 | 10 Research / experience | Planned | Timeline depth; still data-driven |
 | 11 GitHub | Planned | Stats, graph, repo cards; still fail-soft |
@@ -35,7 +35,7 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 
 ## Phase 3 dependency decision
 
-Framer Motion is installed for **semantic** boot/window opacity and reduced-motion checks. Architecture explorer is SVG (no React Flow).
+Framer Motion is installed for **semantic** boot/window opacity and reduced-motion checks. Architecture and use-case explorers are SVG (no React Flow).
 
 ## Local loop
 

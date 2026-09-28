@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { architectures } from "@/data/architectures";
 import { surakshaAstraArchitecture } from "@/data/architectures/suraksha-astra";
+import { useCaseModels } from "@/data/use-cases";
 import { surakshaAstraUseCases } from "@/data/use-cases/suraksha-astra";
 import {
   flowEdgeOrder,
   layoutArchitectureGraph,
   orderedLayers,
 } from "@/lib/architecture-layout";
+import { layoutUseCaseModel } from "@/lib/use-case-layout";
 
 describe("architecture graph integrity", () => {
   it("only references existing node ids on edges for every graph", () => {
@@ -57,13 +59,26 @@ describe("architecture layout", () => {
 });
 
 describe("use-case model integrity", () => {
-  it("only references existing actors and use cases", () => {
-    const actors = new Set(surakshaAstraUseCases.actors.map((actor) => actor.id));
-    const useCases = new Set(surakshaAstraUseCases.useCases.map((item) => item.id));
+  it("only references existing actors and use cases on every model", () => {
+    for (const model of useCaseModels) {
+      const actors = new Set(model.actors.map((actor) => actor.id));
+      const useCases = new Set(model.useCases.map((item) => item.id));
+      for (const relationship of model.relationships) {
+        expect(actors.has(relationship.actorId)).toBe(true);
+        expect(useCases.has(relationship.useCaseId)).toBe(true);
+      }
+    }
+  });
+});
 
-    for (const relationship of surakshaAstraUseCases.relationships) {
-      expect(actors.has(relationship.actorId)).toBe(true);
-      expect(useCases.has(relationship.useCaseId)).toBe(true);
+describe("use-case layout", () => {
+  it("places every actor and use case", () => {
+    const layout = layoutUseCaseModel(surakshaAstraUseCases);
+    for (const actor of surakshaAstraUseCases.actors) {
+      expect(layout.boxes[actor.id]?.kind).toBe("actor");
+    }
+    for (const item of surakshaAstraUseCases.useCases) {
+      expect(layout.boxes[item.id]?.kind).toBe("use-case");
     }
   });
 });

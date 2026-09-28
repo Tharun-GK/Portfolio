@@ -44,7 +44,7 @@ StaticProjectRepository
 /projects/[slug]  +  Mission Control  +  search  +  city locations
 ```
 
-Architecture and use-case **graphs are data**. `layoutArchitectureGraph` positions nodes; `ArchitectureExplorer` renders SVG (select, play, zoom). The node list stays visible so playback is never required.
+Architecture and use-case **graphs are data**. `layoutArchitectureGraph` / `layoutUseCaseModel` position nodes; explorers render SVG. Lists and cards remain so diagrams are never required.
 
 ## Window manager
 

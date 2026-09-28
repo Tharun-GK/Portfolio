@@ -134,7 +134,7 @@ Structured nodes and edges from data. SVG explorer: select, play/pause/reset, zo
 
 ### Use-case explorer
 
-Actors, use cases, relationships from data. Click a use case for description, preconditions, flow, output.
+Actors, use cases, relationships from data. Desktop: SVG diagram. Mobile: selectable cards. Click a use case for description, preconditions, flow, output. Full flow list remains below.
 
 ### Tharun City
 

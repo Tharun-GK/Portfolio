@@ -6,7 +6,7 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 7 — Architecture explorer** is in place on the Architecture tab. Phase 8 (use-case explorer) is not started.
+**Phase 8 — Use-case explorer** is in place on the Use Cases tab. Phase 9 (Tharun City) already has a location map; further city depth is optional.
 
 Engineering docs live in [`docs/`](docs/):
 
@@ -38,7 +38,7 @@ Adding a project should mean new data (and optional assets), not a new page comp
 3. `data/use-cases/<slug>.ts`
 4. Assets under `public/images/projects/<slug>/`
 
-`ArchitectureViewer` and `UseCaseViewer` consume graphs from the repository. They must stay project-agnostic. `ArchitectureExplorer` lays out SVG from nodes/edges (no React Flow).
+`ArchitectureViewer` and `UseCaseViewer` consume graphs from the repository. They must stay project-agnostic. Explorers lay out SVG from data (no React Flow).
 
 ```
 Presentation
@@ -129,7 +129,7 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 5.2 City navigation from one location model (done)
 6. Project detail tabs (done)
 7. Architecture explorer (done)
-8. Use-case explorer
+8. Use-case explorer (done)
 9. Tharun City map
 10. Research / experience depth
 11. GitHub graphs
