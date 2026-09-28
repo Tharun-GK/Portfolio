@@ -16,6 +16,7 @@ import {
   districtPadsFromSites,
   type CityCameraMode,
 } from "@/lib/city-3d";
+import { CityLocationCard } from "@/components/city/CityLocationCard";
 import type { CityLocation } from "@/types/city-location";
 
 interface CityCanvasProps {
@@ -114,6 +115,21 @@ export function CityCanvas({ locations, selectedId }: CityCanvasProps) {
           />
         </Canvas>
       </div>
+      {selected ? (
+        <div className="pointer-events-none absolute inset-x-0 top-3 z-10 flex justify-end px-3 md:top-auto md:bottom-16">
+          <div className="pointer-events-auto w-full max-w-sm">
+            <CityLocationCard
+              location={selected}
+              compact
+              onNavigateHere={() => {
+                setMode("approach");
+                setFlyGen((value) => value + 1);
+              }}
+              onOverview={overview}
+            />
+          </div>
+        </div>
+      ) : null}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] px-3 py-2">
         <p className="text-xs text-[var(--muted)]">
           Click a building to fly there. Drag to look around after you arrive. Scroll to zoom.
@@ -142,11 +158,11 @@ export function CityCanvas({ locations, selectedId }: CityCanvasProps) {
             className="rounded-md border border-[var(--border)] px-2 py-1 text-xs hover:bg-[var(--panel-hover)] disabled:opacity-40"
             disabled={!selected}
             onClick={() => {
-              setMode("location");
+              setMode("approach");
               setFlyGen((value) => value + 1);
             }}
           >
-            Go to location
+            Navigate Here
           </button>
         </div>
       </div>

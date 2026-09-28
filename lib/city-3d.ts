@@ -1,6 +1,6 @@
 import type { CityLocation, CityLocationCategory } from "@/types/city-location";
 
-export type CityCameraMode = "overview" | "district" | "location";
+export type CityCameraMode = "overview" | "district" | "location" | "approach";
 
 export type CityBuildingStyle = "tower" | "hall" | "lab" | "campus" | "studio" | "office";
 
@@ -117,9 +117,9 @@ export function overviewCameraPose(): CameraPose {
   return { position: [20, 24, 20], target: [0, 0, 0] };
 }
 
-export function locationCameraPose(site: CitySite): CameraPose {
-  const back = 7.4;
-  const height = 5.6;
+export function locationCameraPose(site: CitySite, closeness = 1): CameraPose {
+  const back = closeness === 2 ? 4.1 : 7.4;
+  const height = closeness === 2 ? 3.35 : 5.6;
   const dx = Math.sin(site.rotY) * back;
   const dz = Math.cos(site.rotY) * back;
   return {
@@ -155,7 +155,7 @@ export function cameraPoseFor(
   if (mode === "district") {
     return districtCameraPose(locations, selected.category);
   }
-  return locationCameraPose(site);
+  return locationCameraPose(site, mode === "approach" ? 2 : 1);
 }
 
 export function lampPositions(compact: boolean): [number, number, number][] {

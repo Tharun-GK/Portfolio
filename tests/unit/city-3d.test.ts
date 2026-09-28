@@ -50,4 +50,26 @@ describe("city 3d mapping", () => {
     );
     expect(closeDist).toBeLessThan(overviewDist);
   });
+
+  it("keeps Open destinations on real cityLocations routes", () => {
+    expect(cityLocations.find((item) => item.id === "loc-gks")?.route).toBe(
+      "/projects/gks-care",
+    );
+    expect(cityLocations.find((item) => item.id === "loc-bookmyshift")?.route).toBe(
+      "/projects/bookmyshift",
+    );
+  });
+
+  it("flies closer on approach than on location view", () => {
+    const site = getCitySite("loc-bookmyshift");
+    expect(site).toBeDefined();
+    if (!site) {
+      return;
+    }
+    const mid = locationCameraPose(site, 1);
+    const near = locationCameraPose(site, 2);
+    const midDist = Math.hypot(mid.position[0] - site.x, mid.position[2] - site.z);
+    const nearDist = Math.hypot(near.position[0] - site.x, near.position[2] - site.z);
+    expect(nearDist).toBeLessThan(midDist);
+  });
 });
