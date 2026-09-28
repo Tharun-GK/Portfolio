@@ -6,7 +6,7 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 8 — Use-case explorer** is in place on the Use Cases tab. Phase 9 (Tharun City) already has a location map; further city depth is optional.
+**Phase 9 — Tharun City** is in place on `/city`. Phase 10 (research / experience depth) is not started.
 
 Engineering docs live in [`docs/`](docs/):
 
@@ -130,7 +130,7 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 6. Project detail tabs (done)
 7. Architecture explorer (done)
 8. Use-case explorer (done)
-9. Tharun City map
+9. Tharun City map (done)
 10. Research / experience depth
 11. GitHub graphs
 12. AI assistant + retrieval

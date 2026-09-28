@@ -1,13 +1,22 @@
 import { Building } from "@/components/city/Building";
+import { CityInspect } from "@/components/city/CityInspect";
 import { CityMap } from "@/components/city/CityMap";
 import { CityNavigation } from "@/components/city/CityNavigation";
+import { CityTransition } from "@/components/city/CityTransition";
 import { District } from "@/components/city/District";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { city } from "@/data/city";
 import { cityLocations } from "@/data/city-locations";
-import { locationToBuilding } from "@/lib/city-map";
+import { locationToBuilding, parseCityLocParam } from "@/lib/city-map";
 
-export default function CityPage() {
+interface PageProps {
+  searchParams: Promise<{ loc?: string | string[] }>;
+}
+
+export default async function CityPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const selected = parseCityLocParam(params.loc, cityLocations);
+
   return (
     <PublicShell title={city.name} description={city.summary}>
       <p className="text-sm text-[var(--muted)]">
@@ -15,11 +24,21 @@ export default function CityPage() {
       </p>
 
       <div className="mt-6 hidden md:block">
-        <CityMap locations={cityLocations} />
+        <CityMap locations={cityLocations} selectedId={selected?.id} />
       </div>
 
       <div className="mt-6 md:hidden">
-        <CityNavigation locations={cityLocations} />
+        <CityNavigation
+          locations={cityLocations}
+          selectedId={selected?.id}
+          initialCategory={selected?.category}
+        />
+      </div>
+
+      <div className="mt-6">
+        <CityTransition locationId={selected?.id ?? "none"}>
+          <CityInspect location={selected} />
+        </CityTransition>
       </div>
 
       <div className="mt-10 hidden gap-8 md:grid md:grid-cols-2">

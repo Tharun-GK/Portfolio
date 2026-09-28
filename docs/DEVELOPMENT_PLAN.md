@@ -23,7 +23,7 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 6 Project detail | Done | Tabs on `/projects/[slug]`; hash deep links |
 | 7 Architecture explorer | Done | SVG graph, select, play/pause/reset/zoom/fit; no React Flow |
 | 8 Use-case explorer | Done | SVG diagram on desktop; cards on mobile; click for flow details |
-| 9 Tharun City | Started | Location map on `/city`; no 3D; not the only path |
+| 9 Tharun City | Done | Inspectable map + `?loc=`; lists still skip the city |
 | 10 Research / experience | Planned | Timeline depth; still data-driven |
 | 11 GitHub | Planned | Stats, graph, repo cards; still fail-soft |
 | 12 AI layer | Planned | Retrieval + provider implementations |

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { cityLocations } from "@/data/city-locations";
 import { city } from "@/data/city";
-import { buildCityMap } from "@/lib/city-map";
+import { buildCityMap, parseCityLocParam } from "@/lib/city-map";
 import { getCityLocationByRoute } from "@/types/city-location";
 
 describe("city locations", () => {
@@ -29,5 +29,11 @@ describe("city locations", () => {
   it("keeps location ids unique", () => {
     const ids = cityLocations.map((item) => item.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("parses loc query onto a known location only", () => {
+    expect(parseCityLocParam("loc-gks", cityLocations)?.route).toBe("/projects/gks-care");
+    expect(parseCityLocParam("missing", cityLocations)).toBeNull();
+    expect(parseCityLocParam(["loc-research"], cityLocations)?.id).toBe("loc-research");
   });
 });

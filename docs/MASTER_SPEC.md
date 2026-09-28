@@ -138,7 +138,7 @@ Actors, use cases, relationships from data. Desktop: SVG diagram. Mobile: select
 
 ### Tharun City
 
-Optional navigation. Locations in `data/city-locations.ts` drive the map; districts are derived. Never the only path.
+Optional navigation. Locations in `data/city-locations.ts` drive the map; districts are derived. `?loc=` inspects a node; public routes remain independent. Never the only path.
 
 ### Research / Experience / BookMyShift HQ / GitHub
 

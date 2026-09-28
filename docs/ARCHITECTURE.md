@@ -41,7 +41,7 @@ data/use-cases/<slug>.ts
         ↓
 StaticProjectRepository
         ↓
-/projects/[slug]  +  Mission Control  +  search  +  city locations
+/projects/[slug]  +  Mission Control  +  search  +  `/city?loc=`
 ```
 
 Architecture and use-case **graphs are data**. `layoutArchitectureGraph` / `layoutUseCaseModel` position nodes; explorers render SVG. Lists and cards remain so diagrams are never required.

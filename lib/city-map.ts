@@ -1,5 +1,29 @@
 import type { CityBuilding, CityDistrict, CityDistrictKind, CityMapData } from "@/types/city";
-import type { CityLocation, CityLocationCategory } from "@/types/city-location";
+import {
+  getCityLocationById,
+  type CityLocation,
+  type CityLocationCategory,
+} from "@/types/city-location";
+
+export const CITY_CATEGORY_LABEL: Record<CityLocationCategory, string> = {
+  core: "Core",
+  mission: "Mission",
+  lab: "Lab",
+  research: "Research",
+  startup: "Startup",
+  profile: "Profile",
+};
+
+export function parseCityLocParam(
+  value: string | string[] | undefined,
+  locations: CityLocation[],
+): CityLocation | null {
+  const raw = Array.isArray(value) ? value[0] : value;
+  if (!raw) {
+    return null;
+  }
+  return getCityLocationById(locations, raw) ?? null;
+}
 
 interface DistrictMeta {
   id: string;

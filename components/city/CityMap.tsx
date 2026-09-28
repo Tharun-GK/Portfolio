@@ -1,20 +1,14 @@
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { CITY_CATEGORY_LABEL } from "@/lib/city-map";
 import type { CityLocation } from "@/types/city-location";
-
-const CATEGORY_LABEL: Record<CityLocation["category"], string> = {
-  core: "Core",
-  mission: "Mission",
-  lab: "Lab",
-  research: "Research",
-  startup: "Startup",
-  profile: "Profile",
-};
 
 interface CityMapProps {
   locations: CityLocation[];
+  selectedId?: string | null;
 }
 
-export function CityMap({ locations }: CityMapProps) {
+export function CityMap({ locations, selectedId }: CityMapProps) {
   const hub = locations.find((item) => item.id === "loc-central") ?? locations[0];
 
   return (
@@ -36,33 +30,48 @@ export function CityMap({ locations }: CityMapProps) {
                   x2={item.position.x}
                   y2={item.position.y}
                   stroke="currentColor"
-                  strokeOpacity="0.18"
-                  strokeWidth="0.35"
+                  strokeOpacity={selectedId === item.id ? 0.45 : 0.18}
+                  strokeWidth={selectedId === item.id ? 0.55 : 0.35}
                 />
               ))
           : null}
       </svg>
       <ul className="absolute inset-0">
-        {locations.map((location) => (
-          <li
-            key={location.id}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${location.position.x}%`, top: `${location.position.y}%` }}
-          >
-            <Link
-              href={location.route}
-              className="group flex max-w-36 flex-col items-center text-center outline-none"
+        {locations.map((location) => {
+          const selected = location.id === selectedId;
+          const planned = location.status === "planned";
+          return (
+            <li
+              key={location.id}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${location.position.x}%`, top: `${location.position.y}%` }}
             >
-              <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent)] ring-4 ring-[var(--accent)]/20 group-hover:ring-[var(--accent)]/40 group-focus-visible:ring-[var(--accent)]/50" />
-              <span className="mt-1 text-[10px] font-medium leading-tight text-[var(--text)]">
-                {location.name}
-              </span>
-              <span className="text-[9px] uppercase tracking-wide text-[var(--muted)]">
-                {CATEGORY_LABEL[location.category]}
-              </span>
-            </Link>
-          </li>
-        ))}
+              <Link
+                href={`/city?loc=${location.id}`}
+                scroll={false}
+                aria-current={selected ? "true" : undefined}
+                className="group flex max-w-36 flex-col items-center text-center outline-none"
+              >
+                <span
+                  className={cn(
+                    "h-2.5 w-2.5 rounded-full ring-4",
+                    planned ? "bg-[var(--muted)] ring-[var(--muted)]/20" : "bg-[var(--accent)]",
+                    selected
+                      ? "ring-[var(--accent)]/50"
+                      : "ring-[var(--accent)]/20 group-hover:ring-[var(--accent)]/40 group-focus-visible:ring-[var(--accent)]/50",
+                  )}
+                />
+                <span className="mt-1 text-[10px] font-medium leading-tight text-[var(--text)]">
+                  {location.name}
+                </span>
+                <span className="text-[9px] uppercase tracking-wide text-[var(--muted)]">
+                  {CITY_CATEGORY_LABEL[location.category]}
+                  {planned ? " · planned" : ""}
+                </span>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
