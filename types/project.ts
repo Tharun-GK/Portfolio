@@ -71,4 +71,5 @@ export interface Project {
   tags: string[];
   featured: boolean;
   updatedAt: string;
+  deployment?: string;
 }

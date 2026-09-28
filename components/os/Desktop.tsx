@@ -2,14 +2,15 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { BootScreen } from "@/components/boot/BootScreen";
-import { AppIconGrid } from "@/components/os/AppIcon";
 import { usePalette } from "@/components/os/CommandPalette";
+import { SystemCore } from "@/components/os/SystemCore";
+import { SystemRails } from "@/components/os/SystemRails";
+import { SystemStatusBar } from "@/components/os/SystemStatusBar";
 import { Taskbar } from "@/components/os/Taskbar";
 import { WindowManager } from "@/components/os/WindowManager";
 import { useWindowManager } from "@/hooks/useWindowManager";
 import { persistSkipBoot, readSkipBoot } from "@/lib/boot";
-import { SITE_NAME } from "@/lib/constants";
-import type { DesktopApp } from "@/lib/os-apps";
+import { getDesktopApp, type DesktopApp } from "@/lib/os-apps";
 import type { DesktopPayload } from "@/types/desktop";
 
 interface DesktopProps {
@@ -18,20 +19,27 @@ interface DesktopProps {
 
 export function Desktop({ desktop }: DesktopProps) {
   const [mode, setMode] = useState<"unknown" | "desktop">("unknown");
+  const [wide, setWide] = useState(false);
   const [booted, setBooted] = useState(false);
   const { openWindow } = useWindowManager();
   const palette = usePalette();
 
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 768px)");
+    const desktopMedia = window.matchMedia("(min-width: 768px)");
+    const wideMedia = window.matchMedia("(min-width: 1024px)");
 
     function apply() {
-      setMode(media.matches ? "desktop" : "unknown");
+      setMode(desktopMedia.matches ? "desktop" : "unknown");
+      setWide(wideMedia.matches);
     }
 
     apply();
-    media.addEventListener("change", apply);
-    return () => media.removeEventListener("change", apply);
+    desktopMedia.addEventListener("change", apply);
+    wideMedia.addEventListener("change", apply);
+    return () => {
+      desktopMedia.removeEventListener("change", apply);
+      wideMedia.removeEventListener("change", apply);
+    };
   }, []);
 
   useEffect(() => {
@@ -67,29 +75,34 @@ export function Desktop({ desktop }: DesktopProps) {
     return <BootScreen onComplete={onBootComplete} />;
   }
 
+  const projectLab = getDesktopApp("project-lab");
+
   return (
-    <div className="relative min-h-screen">
+    <div className="os-shell relative min-h-screen">
       <a
         href="#os-workspace"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-[var(--panel)] focus:px-3 focus:py-2"
       >
         Skip to workspace
       </a>
+      <SystemStatusBar currentFocus={desktop.currentFocus} />
       <div
         id="os-workspace"
-        className="absolute inset-0 bottom-14 overflow-hidden bg-[var(--bg)] p-6"
+        className="absolute inset-0 bottom-14 overflow-hidden pt-10"
       >
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-          {SITE_NAME}
-        </p>
-        <h1 className="mt-2 text-2xl font-semibold">{desktop.name}</h1>
-        <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">{desktop.positioning}</p>
-        <div className="mt-8 max-w-3xl">
-          <AppIconGrid onOpen={openApp} />
-        </div>
+        <SystemCore desktop={desktop} onOpen={openApp} />
+        <SystemRails
+          desktop={desktop}
+          compact={!wide}
+          onOpenProjects={() => {
+            if (projectLab) {
+              openApp(projectLab);
+            }
+          }}
+        />
         <WindowManager desktop={desktop} />
       </div>
-      <Taskbar onCommand={() => palette.setOpen(true)} />
+      <Taskbar onCommand={() => palette.setOpen(true)} onOpenApp={openApp} />
     </div>
   );
 }

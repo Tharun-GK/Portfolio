@@ -20,7 +20,7 @@ Source of truth: CSS custom properties in `app/globals.css`. Typed accessors: `l
 | `--text` / `--muted` | Hierarchy |
 | `--accent` / `--focus` | Interaction and focus ring |
 
-Accent is restrained (warm metal, not neon).
+Accent on public routes is restrained (warm metal). The OS shell (`os-shell`) uses cyan/amber system illumination scoped to the homepage environment only.
 
 ### Status (projects)
 

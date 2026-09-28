@@ -18,6 +18,7 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 3 Desktop | Done | Boot (short, skippable), desktop, taskbar, command palette UI, windows on home |
 | 4 Mission Control | Done | Denser recruiter IA using existing data |
 | 5 Project Lab | Done | Filters, sort, search UI |
+| 5.1 OS repair | Done | Window lifecycle fix + command-center desktop |
 | 6 Project detail | Next | Tabs; still `/projects/[slug]` |
 | 7 Architecture explorer | Planned | SVG/Framer (and React Flow only if needed) |
 | 8 Use-case explorer | Planned | Data-driven diagram / mobile cards |

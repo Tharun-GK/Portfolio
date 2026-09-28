@@ -1,24 +1,13 @@
 import { HomeExperience } from "@/components/os/HomeExperience";
-import { SITE_TAGLINE } from "@/lib/constants";
-import { getProjectRepository } from "@/lib/repositories";
 import { profile } from "@/data/profile";
-import type { DesktopPayload } from "@/types/desktop";
+import { SITE_TAGLINE } from "@/lib/constants";
+import { getMissionControlSnapshot } from "@/lib/services/mission-control";
 
 export default async function HomePage() {
-  const featured = await getProjectRepository().getFeaturedProjects();
-
-  const desktop: DesktopPayload = {
-    name: profile.name,
-    role: profile.role,
-    positioning: profile.positioning,
-    summary: profile.summary,
-    projects: featured.map((project) => ({
-      slug: project.slug,
-      title: project.title,
-      shortDescription: project.shortDescription,
-      status: project.status,
-    })),
-  };
+  const snapshot = await getMissionControlSnapshot();
+  const currentFocus =
+    snapshot.missions.find((mission) => mission.status === "in-progress")?.title ??
+    snapshot.brief.workingOn;
 
   return (
     <>
@@ -27,14 +16,26 @@ export default async function HomePage() {
           {profile.name}. {profile.role}. {SITE_TAGLINE}
         </p>
         <ul>
-          {desktop.projects.map((project) => (
+          {snapshot.projects.map((project) => (
             <li key={project.slug}>
               <a href={`/projects/${project.slug}`}>{project.title}</a>
             </li>
           ))}
         </ul>
       </section>
-      <HomeExperience desktop={desktop} />
+      <HomeExperience
+        desktop={{
+          name: profile.name,
+          role: profile.role,
+          positioning: profile.positioning,
+          summary: profile.summary,
+          projects: snapshot.projects,
+          missions: snapshot.missions,
+          activities: snapshot.activities,
+          researchCount: snapshot.research.length,
+          currentFocus,
+        }}
+      />
     </>
   );
 }

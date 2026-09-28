@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { type PointerEvent, type ReactNode, useRef } from "react";
 import { WindowControls } from "@/components/os/WindowControls";
-import type { ManagedWindow } from "@/hooks/useWindowManager";
+import type { ManagedWindow } from "@/lib/window-manager";
 import { cn } from "@/lib/utils";
 
 interface AppWindowProps {
@@ -28,9 +28,13 @@ export function AppWindow({
   onMove,
 }: AppWindowProps) {
   const reduceMotion = useReducedMotion();
-  const drag = useRef<{ ox: number; oy: number; startX: number; startY: number } | null>(
-    null,
-  );
+  const drag = useRef<{
+    pointerId: number;
+    ox: number;
+    oy: number;
+    startX: number;
+    startY: number;
+  } | null>(null);
 
   if (window.state === "minimized") {
     return null;
@@ -38,12 +42,15 @@ export function AppWindow({
 
   const maximized = window.state === "maximized";
 
-  function onPointerDown(event: PointerEvent<HTMLDivElement>) {
+  function onDragStart(event: PointerEvent<HTMLDivElement>) {
     if (maximized || event.button !== 0) {
+      onFocus();
       return;
     }
+    event.stopPropagation();
     onFocus();
     drag.current = {
+      pointerId: event.pointerId,
       ox: event.clientX,
       oy: event.clientY,
       startX: window.x,
@@ -53,50 +60,63 @@ export function AppWindow({
   }
 
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
-    if (!drag.current) {
+    if (!drag.current || event.pointerId !== drag.current.pointerId) {
       return;
     }
-    const x = drag.current.startX + (event.clientX - drag.current.ox);
-    const y = Math.max(0, drag.current.startY + (event.clientY - drag.current.oy));
-    onMove(x, y);
+    onMove(
+      drag.current.startX + (event.clientX - drag.current.ox),
+      drag.current.startY + (event.clientY - drag.current.oy),
+    );
   }
 
-  function onPointerUp() {
+  function onPointerUp(event: PointerEvent<HTMLDivElement>) {
+    if (!drag.current || event.pointerId !== drag.current.pointerId) {
+      return;
+    }
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
     drag.current = null;
   }
 
   return (
-    <motion.section
+    <section
       role="dialog"
       aria-label={window.title}
       aria-modal="false"
       className={cn(
-        "absolute flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--panel)] shadow-[var(--shadow-panel)]",
-        focused ? "ring-1 ring-[var(--accent)]" : "",
+        "absolute flex flex-col overflow-hidden border bg-[var(--os-panel)] shadow-[var(--os-glow)]",
+        focused
+          ? "border-[var(--os-cyan)]"
+          : "border-[var(--os-border)]",
         maximized
-          ? "inset-4 bottom-20 right-4 left-4 top-4 w-auto"
-          : "h-[min(28rem,calc(100%-6rem))] w-[min(40rem,calc(100%-2rem))]",
+          ? "inset-3 bottom-[4.75rem] left-3 right-3 top-12"
+          : "h-[min(26.25rem,calc(100%-5.5rem))] w-[min(40rem,calc(100%-1.5rem))]",
+        reduceMotion ? "" : "transition-[opacity,box-shadow] duration-[var(--motion-fast)]",
       )}
       style={
         maximized
-          ? { zIndex: window.zIndex }
-          : { left: window.x, top: window.y, zIndex: window.zIndex }
+          ? { zIndex: window.zIndex, borderRadius: 2 }
+          : {
+              left: window.x,
+              top: window.y,
+              zIndex: window.zIndex,
+              borderRadius: 2,
+            }
       }
       onMouseDown={onFocus}
-      initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: reduceMotion ? 0 : 0.16 }}
     >
-      <div onPointerMove={onPointerMove} onPointerUp={onPointerUp}>
+      <div onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
         <WindowControls
           title={window.title}
+          maximized={maximized}
           onMinimize={onMinimize}
           onMaximize={onMaximize}
           onClose={onClose}
-          onPointerDown={onPointerDown}
+          onDragStart={onDragStart}
         />
       </div>
       <div className="min-h-0 flex-1 overflow-auto p-4">{children}</div>
-    </motion.section>
+    </section>
   );
 }

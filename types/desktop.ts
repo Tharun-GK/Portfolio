@@ -1,3 +1,5 @@
+import type { Activity } from "@/types/activity";
+import type { Mission } from "@/types/mission";
 import type { ProjectStatus } from "@/types/project";
 
 export interface DesktopProjectCard {
@@ -13,4 +15,8 @@ export interface DesktopPayload {
   positioning: string;
   summary: string;
   projects: DesktopProjectCard[];
+  missions: Mission[];
+  activities: Activity[];
+  researchCount: number;
+  currentFocus: string;
 }
