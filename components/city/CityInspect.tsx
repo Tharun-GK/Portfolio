@@ -11,7 +11,7 @@ export function CityInspect({ location }: CityInspectProps) {
   if (!location) {
     return (
       <p className="text-sm text-[var(--muted)]">
-        Select a node to inspect it. District lists and public routes skip the map entirely.
+        Select a building in the city or a district list item. Direct routes skip the map.
       </p>
     );
   }
