@@ -130,7 +130,7 @@ Hero through related projects; tabs (Overview, Architecture, Use Cases, Data Flo
 
 ### Architecture explorer
 
-Structured nodes and edges. Interactive selection. Play/pause/reset/zoom/fit. Animate data along edges only when communicating flow. Renderer must not know project names.
+Structured nodes and edges from data. SVG explorer: select, play/pause/reset, zoom/fit. Data along edges only while playing. Renderer does not special-case project names. Node list remains the non-animated path.
 
 ### Use-case explorer
 

@@ -44,7 +44,7 @@ StaticProjectRepository
 /projects/[slug]  +  Mission Control  +  search  +  city locations
 ```
 
-Architecture and use-case **graphs are data**. `ArchitectureViewer` / `UseCaseViewer` consume those graphs. Interactive explorers (later) reuse the same data.
+Architecture and use-case **graphs are data**. `layoutArchitectureGraph` positions nodes; `ArchitectureExplorer` renders SVG (select, play, zoom). The node list stays visible so playback is never required.
 
 ## Window manager
 

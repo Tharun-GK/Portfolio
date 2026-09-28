@@ -56,7 +56,7 @@ Missions: blocked uses `--status-blocked`. Other mission states map onto the pro
 | Button / Badge / Modal / Tooltip / Loading / EmptyState / ErrorBoundary | `components/shared/` |
 | PublicShell / MobileNav | `components/layout/` |
 | CityMap / CityNavigation / District / Building | `components/city/` |
-| ArchitectureViewer / UseCaseViewer / ProjectDetailTabs | `components/projects/` |
+| ArchitectureViewer / ArchitectureExplorer / UseCaseViewer / ProjectDetailTabs | `components/projects/` |
 
 Pages should compose these instead of repeating border/background utilities.
 

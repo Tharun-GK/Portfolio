@@ -1,3 +1,4 @@
+import { ArchitectureExplorer } from "@/components/projects/ArchitectureExplorer";
 import { Panel } from "@/components/design/Panel";
 import { SectionHeading } from "@/components/design/SectionHeading";
 import { EmptyState } from "@/components/shared/EmptyState";
@@ -24,7 +25,10 @@ export function ArchitectureViewer({ architecture }: ArchitectureViewerProps) {
       <p className="max-w-prose text-sm leading-6 text-[var(--muted)]">
         {architecture.description}
       </p>
-      <ol className="mt-4 grid gap-2">
+      <div className="mt-4">
+        <ArchitectureExplorer graph={architecture} />
+      </div>
+      <ol className="mt-6 grid gap-2" aria-label="Architecture nodes">
         {architecture.nodes.map((node) => (
           <Panel as="li" key={node.id} className="p-4">
             <div
