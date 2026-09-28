@@ -73,4 +73,13 @@ export const cityLocations: CityLocation[] = [
     position: { x: 78, y: 68 },
     status: "online",
   },
+  {
+    id: "loc-experience",
+    name: "Experience Hall",
+    description: "Founding and independent engineering timeline.",
+    route: "/experience",
+    category: "profile",
+    position: { x: 82, y: 50 },
+    status: "online",
+  },
 ];

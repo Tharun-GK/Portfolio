@@ -138,7 +138,7 @@ Actors, use cases, relationships from data. Click a use case for description, pr
 
 ### Tharun City
 
-Optional navigation. Districts and buildings from data. Never the only path.
+Optional navigation. Locations in `data/city-locations.ts` drive the map; districts are derived. Never the only path.
 
 ### Research / Experience / BookMyShift HQ / GitHub
 

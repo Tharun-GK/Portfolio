@@ -26,7 +26,7 @@ Actors, use cases (description, actorIds, preconditions, mainFlow, output), rela
 
 - **Mission**: status `planned | in-progress | blocked | complete`, progress, related project
 - **Activity**: ActivityType union, date, optional related ids/href
-- **Research / Experience / Skill / Profile / City** (districts → buildings → href)
+- **Research / Experience / Skill / Profile / City** — `cityLocations` is the source of truth; districts/buildings on `city` are derived via `buildCityMap`
 
 ## Seed systems
 

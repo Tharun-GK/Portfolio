@@ -1,5 +1,5 @@
 import { activities } from "@/data/activities";
-import { city } from "@/data/city";
+import { cityLocations } from "@/data/city-locations";
 import { experienceItems } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { researchItems } from "@/data/research";
@@ -127,18 +127,15 @@ export function searchPortfolio(query: string, limit = 12): SearchResult[] {
     }
   }
 
-  for (const district of city.districts) {
-    const score = scoreMatch(query, district.name, [
-      district.summary,
-      ...district.buildings.map((building) => building.name),
-    ]);
+  for (const location of cityLocations) {
+    const score = scoreMatch(query, location.name, [location.description, location.route]);
     if (score > 0) {
       results.push({
-        id: district.id,
+        id: location.id,
         kind: "city",
-        title: district.name,
-        description: district.summary,
-        href: "/city",
+        title: location.name,
+        description: location.description,
+        href: location.route,
         score,
       });
     }

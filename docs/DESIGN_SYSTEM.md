@@ -55,6 +55,7 @@ Missions: blocked uses `--status-blocked`. Other mission states map onto the pro
 | SectionHeading | `components/design/SectionHeading.tsx` |
 | Button / Badge / Modal / Tooltip / Loading / EmptyState / ErrorBoundary | `components/shared/` |
 | PublicShell / MobileNav | `components/layout/` |
+| CityMap / CityNavigation / District / Building | `components/city/` |
 
 Pages should compose these instead of repeating border/background utilities.
 

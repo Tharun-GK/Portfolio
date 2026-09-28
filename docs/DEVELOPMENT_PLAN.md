@@ -19,10 +19,11 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 4 Mission Control | Done | Denser recruiter IA using existing data |
 | 5 Project Lab | Done | Filters, sort, search UI |
 | 5.1 OS repair | Done | Window lifecycle fix + command-center desktop |
+| 5.2 City navigation | Done | Single location model; optional map + mobile district selector |
 | 6 Project detail | Next | Tabs; still `/projects/[slug]` |
 | 7 Architecture explorer | Planned | SVG/Framer (and React Flow only if needed) |
 | 8 Use-case explorer | Planned | Data-driven diagram / mobile cards |
-| 9 Tharun City | Planned | Map on desktop; district selector on mobile |
+| 9 Tharun City | Started | Location map on `/city`; no 3D; not the only path |
 | 10 Research / experience | Planned | Timeline depth; still data-driven |
 | 11 GitHub | Planned | Stats, graph, repo cards; still fail-soft |
 | 12 AI layer | Planned | Retrieval + provider implementations |

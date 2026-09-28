@@ -41,7 +41,7 @@ data/use-cases/<slug>.ts
         ↓
 StaticProjectRepository
         ↓
-/projects/[slug]  +  Mission Control  +  search  +  city buildings
+/projects/[slug]  +  Mission Control  +  search  +  city locations
 ```
 
 Architecture and use-case **graphs are data**. Visual explorers (later) consume the same graphs.
