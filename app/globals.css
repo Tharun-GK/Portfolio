@@ -88,6 +88,327 @@
   box-shadow: inset 0 0 48px rgba(110, 200, 220, 0.06), var(--os-glow);
 }
 
+.mc-hud {
+  --hud-cyan: #4fd4ee;
+  --hud-amber: #c9a15b;
+  --hud-line: rgba(79, 212, 238, 0.28);
+  --hud-fill: rgba(8, 16, 26, 0.78);
+  --accent: var(--hud-cyan);
+  --focus: var(--hud-cyan);
+  --border: var(--hud-line);
+  --panel: var(--hud-fill);
+}
+
+.command-center {
+  --hud-cyan: #4fd4ee;
+  --hud-line: rgba(79, 212, 238, 0.38);
+  --accent: var(--hud-cyan);
+  --focus: var(--hud-cyan);
+  --border: var(--hud-line);
+  --text: #e8f6fb;
+  --muted: #8aa3b3;
+  color: var(--text);
+  background-color: #03060b;
+}
+
+.command-atmosphere {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 55% 48% at 54% 42%, rgba(28, 120, 170, 0.28), transparent 58%),
+    radial-gradient(ellipse 40% 30% at 78% 88%, rgba(180, 90, 30, 0.18), transparent 55%),
+    radial-gradient(ellipse 30% 24% at 22% 88%, rgba(180, 90, 30, 0.12), transparent 50%),
+    linear-gradient(180deg, #07131c 0%, #050910 42%, #081018 72%, #120c08 100%);
+}
+
+.command-ceiling {
+  position: absolute;
+  inset: 0 0 40% 0;
+  background-image:
+    linear-gradient(180deg, rgba(4, 10, 16, 0.55), transparent),
+    repeating-linear-gradient(90deg, transparent 0 7.5%, rgba(90, 190, 220, 0.07) 7.5% 8%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 80%);
+}
+
+.command-haze {
+  position: absolute;
+  inset: 18% 18% 22% 18%;
+  background: radial-gradient(circle, rgba(70, 200, 235, 0.16), transparent 68%);
+  filter: blur(18px);
+  animation: command-breathe 8s ease-in-out infinite;
+}
+
+.command-particles span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(160, 240, 255, 0.55);
+  left: calc(8% + (var(--i) * 6.4%));
+  top: calc(18% + (var(--i) * 4.2%));
+  animation: command-float 9s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.45s);
+}
+
+.command-rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 30;
+  width: 16.75rem;
+  flex-direction: column;
+  border-right: 1px solid rgba(79, 212, 238, 0.28);
+  background: linear-gradient(180deg, rgba(8, 22, 36, 0.96), rgba(4, 10, 16, 0.98));
+  box-shadow: inset -1px 0 24px rgba(40, 160, 200, 0.08), 12px 0 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.command-nav-active {
+  background: linear-gradient(90deg, rgba(56, 190, 220, 0.28), rgba(20, 80, 110, 0.12));
+  box-shadow: inset 0 0 0 1px rgba(120, 230, 255, 0.25), 0 0 22px rgba(60, 200, 230, 0.2);
+}
+
+.command-header {
+  border-bottom: 1px solid rgba(79, 212, 238, 0.22);
+  background: linear-gradient(180deg, rgba(8, 18, 28, 0.72), rgba(8, 18, 28, 0.2));
+  backdrop-filter: blur(10px);
+}
+
+.command-theater {
+  position: relative;
+  display: grid;
+  min-height: calc(100vh - 4.6rem);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto auto;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem 7.5rem;
+}
+
+.command-operator-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 22rem;
+  pointer-events: none;
+}
+
+.command-float {
+  z-index: 2;
+}
+
+.command-desk {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  height: 7.5rem;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.command-desk-art {
+  width: min(920px, 100%);
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.92;
+  mask-image: linear-gradient(180deg, transparent, #000 28%);
+}
+
+.command-desk-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 20%, rgba(10, 8, 6, 0.35));
+}
+
+.operator-core {
+  position: relative;
+  width: min(22rem, 86vw);
+}
+
+.operator-art {
+  position: relative;
+  z-index: 1;
+  height: auto;
+  width: 100%;
+  filter: drop-shadow(0 0 28px rgba(70, 210, 240, 0.35));
+  animation: operator-pulse 5.5s ease-in-out infinite;
+}
+
+.operator-rings {
+  position: absolute;
+  inset: 12% 8% 18%;
+  z-index: 0;
+}
+
+.operator-rings span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(79, 212, 238, 0.18);
+  border-radius: 999px;
+  animation: operator-spin 22s linear infinite;
+}
+
+.operator-rings span:nth-child(2) {
+  inset: 8%;
+  animation-duration: 16s;
+  animation-direction: reverse;
+  border-style: dashed;
+}
+
+.operator-rings span:nth-child(3) {
+  inset: 18%;
+  animation-duration: 28s;
+}
+
+.operator-scanline {
+  position: absolute;
+  inset: 10% 18% 22%;
+  z-index: 2;
+  background: linear-gradient(180deg, transparent 0%, rgba(160, 240, 255, 0.18) 48%, transparent 52%);
+  mix-blend-mode: screen;
+  animation: operator-scan 4.5s linear infinite;
+  pointer-events: none;
+}
+
+.hud-frame {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(10, 28, 44, 0.78), rgba(6, 12, 20, 0.82));
+  border: 1px solid var(--hud-line);
+  box-shadow:
+    inset 0 0 0 1px rgba(79, 212, 238, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.28),
+    0 0 28px rgba(40, 140, 180, 0.12);
+  backdrop-filter: blur(14px);
+  clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+
+.hud-frame::before,
+.hud-frame::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--hud-cyan);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.hud-frame::before {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.hud-frame::after {
+  right: 0;
+  bottom: 0;
+  border-width: 0 1px 1px 0;
+}
+
+.hud-ring-progress {
+  transition: stroke-dashoffset 800ms ease;
+}
+
+@keyframes operator-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes operator-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 22px rgba(70, 210, 240, 0.28)) brightness(0.96);
+  }
+  50% {
+    filter: drop-shadow(0 0 38px rgba(90, 230, 255, 0.48)) brightness(1.06);
+  }
+}
+
+@keyframes operator-scan {
+  from {
+    transform: translateY(-18%);
+  }
+  to {
+    transform: translateY(18%);
+  }
+}
+
+@keyframes command-breathe {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes command-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0.9;
+  }
+}
+
+@media (min-width: 1100px) {
+  .command-theater {
+    grid-template-columns: minmax(19rem, 1fr) minmax(16rem, 24rem) minmax(19rem, 1fr);
+    grid-template-rows: auto 1fr auto;
+    padding: 1rem 1.25rem 7.75rem;
+  }
+
+  .command-float-progress {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .command-float-overview {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .command-operator-slot {
+    grid-column: 1 / -1;
+    grid-row: 1 / span 3;
+    min-height: auto;
+  }
+
+  .command-float-github {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: end;
+  }
+
+  .command-float-links {
+    grid-column: 3;
+    grid-row: 3;
+    align-self: end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .operator-art,
+  .operator-rings span,
+  .operator-scanline,
+  .command-haze,
+  .command-particles span,
+  .hud-ring-progress {
+    animation: none;
+    transition: none;
+  }
+}
+
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--text);

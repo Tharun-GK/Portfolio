@@ -25,7 +25,7 @@ Build incrementally. After each phase: lint, test, build, summarize, then wait f
 | 8 Use-case explorer | Done | SVG diagram on desktop; cards on mobile; click for flow details |
 | 9 Tharun City | Done | Inspectable map + `?loc=`; lists still skip the city |
 | 9.5 City 3D | Done | Optional R3F map; WebGL fallback to 2D; same `cityLocations` |
-| 10 Research / experience | Planned | Timeline depth; still data-driven |
+| 10 Research / experience | Done | Timeline depth; Mission Control HUD from real progress |
 | 11 GitHub | Planned | Stats, graph, repo cards; still fail-soft |
 | 12 AI layer | Planned | Retrieval + provider implementations |
 | 13 Database | Planned | Prisma behind repositories |

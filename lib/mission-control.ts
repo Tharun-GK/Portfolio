@@ -2,7 +2,8 @@ import type { Activity } from "@/types/activity";
 import type { ExperienceItem } from "@/types/experience";
 import type { Mission } from "@/types/mission";
 import type { Skill } from "@/types/profile";
-import type { Project, ProjectStatus } from "@/types/project";
+import type { Project, ProjectCategory, ProjectStatus } from "@/types/project";
+import { PROJECT_CATEGORY_LABEL } from "@/lib/constants";
 import type { ResearchItem } from "@/types/research";
 import type { GitHubSnapshot } from "@/lib/github";
 
@@ -13,6 +14,7 @@ export interface MissionControlProject {
   status: ProjectStatus;
   progress: number;
   technologies: string[];
+  categories: ProjectCategory[];
 }
 
 export interface MissionControlStartup {
@@ -43,6 +45,16 @@ export interface MissionControlSnapshot {
   github: GitHubSnapshot;
 }
 
+export function projectStatusCounts(
+  projects: MissionControlProject[],
+): Partial<Record<ProjectStatus, number>> {
+  const counts: Partial<Record<ProjectStatus, number>> = {};
+  for (const project of projects) {
+    counts[project.status] = (counts[project.status] ?? 0) + 1;
+  }
+  return counts;
+}
+
 export function toMissionControlProject(project: Project): MissionControlProject {
   return {
     slug: project.slug,
@@ -51,7 +63,15 @@ export function toMissionControlProject(project: Project): MissionControlProject
     status: project.status,
     progress: project.progress,
     technologies: project.technologies.slice(0, 4),
+    categories: project.categories,
   };
+}
+
+export function projectCategoryCaption(project: MissionControlProject): string {
+  return project.categories
+    .slice(0, 2)
+    .map((category) => PROJECT_CATEGORY_LABEL[category] ?? category)
+    .join(" / ");
 }
 
 export function buildMissionControlBrief(input: {

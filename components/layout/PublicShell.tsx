@@ -8,10 +8,12 @@ export function PublicShell({
   children,
   title,
   description,
+  wide = false,
 }: {
   children: ReactNode;
   title: string;
   description: string;
+  wide?: boolean;
 }) {
   const navigation = getPublicNavigation();
 
@@ -44,7 +46,7 @@ export function PublicShell({
           </nav>
         </div>
       </header>
-      <main id="content" className="mx-auto max-w-6xl px-4 py-10">
+      <main id="content" className={`mx-auto px-4 py-10 ${wide ? "max-w-7xl" : "max-w-6xl"}`}>
         <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--muted)]">
           {SITE_NAME}
         </p>

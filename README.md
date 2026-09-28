@@ -6,7 +6,7 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 9.5 — Optional 3D Tharun City** is on `/city` (WebGL) with the existing 2D map as fallback. Phase 10 (research / experience depth) is not started.
+**Phase 10 — Command dashboard + research/experience depth.** Mission Control is a HUD of real progress rings and records. Phase 11 (GitHub graphs) is not started.
 
 Engineering docs live in [`docs/`](docs/):
 
@@ -133,7 +133,8 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 8. Use-case explorer (done)
 9. Tharun City map (done)
 9.5 Optional 3D city map (done)
-10. Research / experience depth
+10. Command dashboard + research/experience (done)
+11. GitHub graphs
 11. GitHub graphs
 12. AI assistant + retrieval
 13. Prisma persistence

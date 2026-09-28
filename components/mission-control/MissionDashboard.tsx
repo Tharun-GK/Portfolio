@@ -1,135 +1,148 @@
 import Link from "next/link";
-import { ActivityFeed } from "@/components/mission-control/ActivityFeed";
-import { MissionCard } from "@/components/mission-control/MissionCard";
-import { Panel } from "@/components/design/Panel";
-import { ProgressBar } from "@/components/design/ProgressBar";
-import { SectionHeading } from "@/components/design/SectionHeading";
-import { StatusBadge } from "@/components/design/StatusBadge";
+import { CommandDesk } from "@/components/command-center/CommandDesk";
+import { CommandIcon } from "@/components/command-center/CommandIcons";
+import { HudBars } from "@/components/mission-control/HudBars";
+import { HudPanel } from "@/components/mission-control/HudPanel";
+import { HudRing } from "@/components/mission-control/HudRing";
+import { OperatorCore } from "@/components/mission-control/OperatorCore";
 import { Badge } from "@/components/shared/Badge";
-import { EmptyState } from "@/components/shared/EmptyState";
-import type { MissionControlSnapshot } from "@/lib/mission-control";
+import { PROJECT_STATUS_LABEL } from "@/lib/design-tokens";
+import { projectCategoryCaption, type MissionControlSnapshot } from "@/lib/mission-control";
+import { profile } from "@/data/profile";
 
 interface MissionDashboardProps {
   snapshot: MissionControlSnapshot;
 }
 
+const RING_TONES = ["cyan", "green", "violet"] as const;
+const BAR_TONES = ["#4fd4ee", "#5ee0a8", "#b48cff"];
+
+const QUICK_LINKS = [
+  { href: "/projects", label: "View Projects" },
+  { href: "/research", label: "Explore Research" },
+  { href: "/experience", label: "Check Experience" },
+  { href: "/contact", label: "Get in Touch" },
+] as const;
+
 export function MissionDashboard({ snapshot }: MissionDashboardProps) {
-  const { brief, missions, projects, startup, research, activities, experience, skills, github } =
-    snapshot;
+  const { brief, projects, github, skills } = snapshot;
 
   return (
-    <div className="grid gap-8">
-      <section aria-labelledby="recruiter-brief">
-        <h2 id="recruiter-brief" className="sr-only">
-          Recruiter brief
-        </h2>
-        <Panel>
-          <dl className="grid gap-4 sm:grid-cols-2">
-            <BriefItem term="Who" definition={brief.who} />
-            <BriefItem term="Builds" definition={brief.builds} />
-            <BriefItem term="Technologies" definition={brief.technologies} />
-            <BriefItem term="Working on" definition={brief.workingOn} />
-            <BriefItem term="On record" definition={brief.onRecord} className="sm:col-span-2" />
-          </dl>
-        </Panel>
-      </section>
-
-      <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Signal label="Systems" value={String(projects.length)} href="/projects" />
-        <Signal label="Missions" value={String(missions.length)} />
-        <Signal label="Research" value={String(research.length)} href="/research" />
-        <Signal
-          label="GitHub"
-          value={github.source === "live" ? String(github.repositoryCount) : "—"}
-          href="/github"
-        />
-      </ul>
-
-      <section className="grid gap-8 lg:grid-cols-2">
-        <div>
-          <SectionHeading>Active missions</SectionHeading>
-          <ul className="grid gap-3">
-            {missions.map((mission) => (
-              <MissionCard key={mission.id} mission={mission} />
-            ))}
-          </ul>
+    <div className="mc-hud">
+      <div className="command-theater">
+        <div className="command-operator-slot">
+          <OperatorCore name={profile.name} />
         </div>
-        <div>
-          <SectionHeading>Current systems</SectionHeading>
-          <ul className="grid gap-3">
-            {projects.map((project) => (
+
+        <HudPanel
+          className="command-float command-float-progress"
+          title="Project Progress"
+          subtitle="Real projects. Real impact."
+          icon={<CommandIcon name="projects" className="h-4 w-4" />}
+        >
+          <ul className="grid grid-cols-3 gap-1 sm:gap-2">
+            {projects.map((project, index) => (
               <li key={project.slug}>
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="block rounded-[var(--radius-lg)] border border-[var(--border)] p-4 hover:bg-[var(--panel-hover)]"
+                  className="group block rounded-sm focus-visible:outline focus-visible:outline-offset-2"
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="font-medium">{project.title}</span>
-                    <StatusBadge status={project.status} />
-                  </div>
-                  <p className="mt-2 text-sm text-[var(--muted)]">{project.shortDescription}</p>
-                  <div className="mt-3">
-                    <ProgressBar value={project.progress} />
-                  </div>
+                  <HudRing
+                    value={project.progress}
+                    label={project.title}
+                    caption={projectCategoryCaption(project)}
+                    tone={RING_TONES[index % RING_TONES.length]}
+                  />
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
-      </section>
+        </HudPanel>
 
-      <section className="grid gap-8 lg:grid-cols-2">
-        <div>
-          <SectionHeading>Recent activity</SectionHeading>
-          <ActivityFeed activities={activities} />
-        </div>
-        <div className="grid gap-8">
-          <div>
-            <SectionHeading>Startup</SectionHeading>
-            {startup ? (
-              <Panel>
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="font-medium">
-                    <Link href={`/projects/${startup.slug}`}>{startup.title} HQ</Link>
-                  </h3>
-                  <StatusBadge status={startup.status} />
-                </div>
-                <p className="mt-2 text-sm text-[var(--muted)]">{startup.shortDescription}</p>
-                <div className="mt-3">
-                  <ProgressBar value={startup.progress} label="Product" />
-                </div>
-              </Panel>
-            ) : (
-              <EmptyState
-                title="Startup record unavailable."
-                description="BookMyShift is not in the project registry."
-              />
-            )}
-          </div>
-          <div>
-            <SectionHeading>Research</SectionHeading>
-            <ul className="grid gap-3">
-              {research.map((item) => (
-                <Panel as="li" key={item.id} className="p-4">
-                  <p className="text-sm font-medium">{item.title}</p>
-                  <p className="mt-2 font-mono text-xs text-[var(--muted)]">
-                    {item.status} · {item.date}
-                  </p>
-                  <p className="mt-2">
-                    <Link href="/research" className="text-sm text-[var(--accent)]">
-                      Research Lab →
-                    </Link>
-                  </p>
-                </Panel>
+        <HudPanel
+          className="command-float command-float-overview"
+          title="Mission Overview"
+          subtitle="Key projects at a glance"
+          icon={<CommandIcon name="mission" className="h-4 w-4" />}
+        >
+          <HudBars
+            items={projects.map((project, index) => ({
+              id: project.slug,
+              label: project.title,
+              value: project.progress,
+              status: PROJECT_STATUS_LABEL[project.status],
+              href: `/projects/${project.slug}`,
+              tone: BAR_TONES[index % BAR_TONES.length],
+            }))}
+          />
+        </HudPanel>
+
+        <HudPanel
+          className="command-float command-float-github"
+          title="GitHub"
+          subtitle="Latest activity & repositories"
+        >
+          {github.source === "live" && github.repositories.length > 0 ? (
+            <ul className="grid gap-2">
+              {github.repositories.slice(0, 3).map((repo) => (
+                <li key={repo.url}>
+                  <Link href={repo.url} rel="noreferrer" target="_blank" className="text-sm font-medium">
+                    {repo.name}
+                  </Link>
+                  <p className="mt-1 text-xs text-[var(--muted)]">{repo.language ?? "Language n/a"}</p>
+                </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </section>
+          ) : (
+            <div>
+              <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-[var(--muted)]">
+                Live Data
+              </p>
+              <p className="mt-2 text-2xl tracking-widest text-[var(--text)]">—</p>
+              <p className="mt-2 text-sm text-[var(--muted)]">{github.message ?? "Fetching data..."}</p>
+            </div>
+          )}
+        </HudPanel>
 
-      <section className="grid gap-8 lg:grid-cols-2">
-        <div>
-          <SectionHeading>Stack</SectionHeading>
+        <HudPanel
+          className="command-float command-float-links"
+          title="Quick Links"
+          subtitle="Jump to key sections"
+          icon={<CommandIcon name="contact" className="h-4 w-4" />}
+        >
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {QUICK_LINKS.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="flex items-center justify-between gap-2 border border-[rgba(79,212,238,0.12)] bg-[rgba(6,14,24,0.45)] px-3 py-2.5 text-sm hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                >
+                  {item.label}
+                  <span aria-hidden>→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </HudPanel>
+
+        <CommandDesk />
+      </div>
+
+      <section className="command-records px-4 pb-10 sm:px-6">
+        <HudPanel>
+          <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <BriefItem term="Who" definition={brief.who} />
+            <BriefItem term="Builds" definition={brief.builds} />
+            <BriefItem term="Stack" definition={brief.technologies} />
+            <BriefItem term="Working on" definition={brief.workingOn} />
+            <BriefItem
+              term="On record"
+              definition={brief.onRecord}
+              className="sm:col-span-2 lg:col-span-1"
+            />
+          </dl>
+        </HudPanel>
+        <HudPanel id="stack" className="mt-4" title="Skills & Tech">
           <ul className="flex flex-wrap gap-2">
             {skills.map((skill) => (
               <li key={skill.id}>
@@ -137,51 +150,7 @@ export function MissionDashboard({ snapshot }: MissionDashboardProps) {
               </li>
             ))}
           </ul>
-        </div>
-        <div>
-          <SectionHeading>Experience</SectionHeading>
-          <ul className="grid gap-2">
-            {experience.map((item) => (
-              <li key={item.id} className="text-sm">
-                <span className="font-medium">{item.role}</span>
-                <span className="text-[var(--muted)]"> · {item.organization}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3">
-            <Link href="/experience" className="text-sm text-[var(--accent)]">
-              Full timeline →
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <SectionHeading>GitHub</SectionHeading>
-        {github.source === "fallback" ? (
-          <EmptyState
-            title="GitHub data temporarily unavailable."
-            description={github.message ?? "Live repository counts are not loaded."}
-          />
-        ) : (
-          <ul className="grid gap-2 md:grid-cols-3">
-            {github.repositories.slice(0, 3).map((repo) => (
-              <Panel as="li" key={repo.url} className="p-3">
-                <Link href={repo.url} rel="noreferrer" target="_blank" className="text-sm font-medium">
-                  {repo.name}
-                </Link>
-                <p className="mt-1 text-xs text-[var(--muted)]">
-                  {repo.language ?? "Language n/a"}
-                </p>
-              </Panel>
-            ))}
-          </ul>
-        )}
-        <p className="mt-3">
-          <Link href="/github" className="text-sm text-[var(--accent)]">
-            GitHub module →
-          </Link>
-        </p>
+        </HudPanel>
       </section>
     </div>
   );
@@ -203,36 +172,5 @@ function BriefItem({
       </dt>
       <dd className="mt-1 text-sm leading-6">{definition}</dd>
     </div>
-  );
-}
-
-function Signal({
-  label,
-  value,
-  href,
-}: {
-  label: string;
-  value: string;
-  href?: string;
-}) {
-  const inner = (
-    <Panel as="div" className="p-4">
-      <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--muted)]">
-        {label}
-      </p>
-      <p className="mt-2 text-2xl font-medium">{value}</p>
-    </Panel>
-  );
-
-  if (!href) {
-    return <li>{inner}</li>;
-  }
-
-  return (
-    <li>
-      <Link href={href} className="block">
-        {inner}
-      </Link>
-    </li>
   );
 }
