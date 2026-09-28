@@ -6,7 +6,7 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 4 — Mission Control** is in place (on top of Phases 1–3).
+**Phase 5 — Project Lab** is in place (on top of Phases 1–4).
 
 Engineering docs live in [`docs/`](docs/):
 
@@ -124,7 +124,7 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 2. Design system (done)
 3. THARUN OS desktop + boot (done)
 4. Mission Control density (done)
-5. Project Lab filters
+5. Project Lab filters (done)
 6. Richer project tabs (still `/projects/[slug]`)
 7. Architecture explorer
 8. Use-case explorer
