@@ -60,7 +60,7 @@ Avoid: generic templates, excessive glassmorphism, random 3D, giant spheres, neo
 
 - Frontend: Next.js, TypeScript, React, Tailwind CSS, Framer Motion (when semantic motion is required)
 - Visualization: SVG, Framer Motion, React Flow where appropriate
-- No Three.js unless a concrete UX need cannot be solved with DOM/SVG
+- Three.js / R3F: **optional** `/city` 3D map only; 2D map remains the fallback
 - Backend: Next.js server capabilities and API routes
 - Data v1: typed local TypeScript; PostgreSQL + Prisma later behind repositories
 - Auth: not in v1; future roles Admin / Owner / Public visitor
@@ -138,7 +138,7 @@ Actors, use cases, relationships from data. Desktop: SVG diagram. Mobile: select
 
 ### Tharun City
 
-Optional navigation. Locations in `data/city-locations.ts` drive the map; districts are derived. `?loc=` inspects a node; public routes remain independent. Never the only path.
+Optional navigation. Locations in `data/city-locations.ts` drive 2D and 3D maps. `?loc=` inspects a node; public routes remain independent. 3D is never required.
 
 ### Research / Experience / BookMyShift HQ / GitHub
 

@@ -6,7 +6,7 @@ THARUN OS is a product-shaped portfolio: data-driven systems, public routes for 
 
 ## Current phase
 
-**Phase 9 — Tharun City** is in place on `/city`. Phase 10 (research / experience depth) is not started.
+**Phase 9.5 — Optional 3D Tharun City** is on `/city` (WebGL) with the existing 2D map as fallback. Phase 10 (research / experience depth) is not started.
 
 Engineering docs live in [`docs/`](docs/):
 
@@ -53,6 +53,7 @@ Presentation
 
 - Next.js 15, React 19, TypeScript
 - Tailwind CSS 4
+- Three.js / React Three Fiber (optional city map only)
 - Vitest
 - Vercel-first deployment
 - Prisma schema is documented but **not connected** in version 1
@@ -131,6 +132,7 @@ This directory must be its **own** Git repository. Do not commit THARUN OS into 
 7. Architecture explorer (done)
 8. Use-case explorer (done)
 9. Tharun City map (done)
+9.5 Optional 3D city map (done)
 10. Research / experience depth
 11. GitHub graphs
 12. AI assistant + retrieval

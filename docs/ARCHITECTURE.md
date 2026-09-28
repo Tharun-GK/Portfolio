@@ -71,7 +71,7 @@ Architecture and use-case **graphs are data**. `layoutArchitectureGraph` / `layo
 
 ## Approved stack
 
-Next.js App Router, React, TypeScript, Tailwind CSS 4. Framer Motion and React Flow are **planned** for explorers and OS motion; they are not installed until the phase that needs them. Three.js is not used.
+Next.js App Router, React, TypeScript, Tailwind CSS 4. Framer Motion is used for semantic motion. Three.js + React Three Fiber power the **optional** city 3D map (`CityStage` / `CityCanvas`), lazy-loaded, with the existing 2D `CityMap` as fallback.
 
 ## Future swap
 

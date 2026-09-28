@@ -1,7 +1,7 @@
 import { Building } from "@/components/city/Building";
 import { CityInspect } from "@/components/city/CityInspect";
-import { CityMap } from "@/components/city/CityMap";
 import { CityNavigation } from "@/components/city/CityNavigation";
+import { CityStage } from "@/components/city/CityStage";
 import { CityTransition } from "@/components/city/CityTransition";
 import { District } from "@/components/city/District";
 import { PublicShell } from "@/components/layout/PublicShell";
@@ -23,8 +23,8 @@ export default async function CityPage({ searchParams }: PageProps) {
         Optional exploration. Direct routes, search, and Mission Control remain the fastest paths.
       </p>
 
-      <div className="mt-6 hidden md:block">
-        <CityMap locations={cityLocations} selectedId={selected?.id} />
+      <div className="mt-6">
+        <CityStage locations={cityLocations} selectedId={selected?.id} />
       </div>
 
       <div className="mt-6 md:hidden">
