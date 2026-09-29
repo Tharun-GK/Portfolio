@@ -14,6 +14,7 @@ export interface Profile {
   location?: string;
   email?: string;
   githubUsername?: string;
+  resumeHref?: string;
   skills: Skill[];
   socials: {
     github?: string;

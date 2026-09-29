@@ -30,7 +30,7 @@ describe("buildMissionControlBrief", () => {
     expect(brief.builds).toContain("BookMyShift");
     expect(brief.technologies).toContain("Python");
     expect(brief.workingOn.length).toBeGreaterThan(10);
-    expect(brief.onRecord).toContain("Founder");
+    expect(brief.onRecord).toContain("AI/ML Intern");
     expect(brief.onRecord).not.toContain("clinically validated");
   });
 });

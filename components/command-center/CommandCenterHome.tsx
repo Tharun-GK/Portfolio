@@ -17,12 +17,23 @@ interface CommandCenterHomeProps {
 const RING_TONES = ["cyan", "green", "violet"] as const;
 const BAR_TONES = ["#4fd4ee", "#5ee0a8", "#b48cff"];
 
-const QUICK_LINKS = [
+const QUICK_LINKS: {
+  href: string;
+  label: string;
+  external?: boolean;
+  download?: string;
+}[] = [
   { href: "/projects", label: "View Projects" },
   { href: "/research", label: "Explore Research" },
   { href: "/experience", label: "Check Experience" },
   { href: "/contact", label: "Get in Touch" },
-] as const;
+  ...(profile.resumeHref
+    ? [{ href: profile.resumeHref, label: "Download Resume", download: "Tharun-G-K-Resume.pdf" }]
+    : []),
+  ...(profile.socials.github
+    ? [{ href: profile.socials.github, label: "GitHub Profile", external: true }]
+    : []),
+];
 
 export function CommandCenterHome({ snapshot }: CommandCenterHomeProps) {
   const { brief, projects, github, skills } = snapshot;
@@ -93,7 +104,7 @@ export function CommandCenterHome({ snapshot }: CommandCenterHomeProps) {
                 </li>
               ))}
             </ul>
-          ) : (
+            ) : (
             <div>
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-[var(--muted)]">
                 Live Data
@@ -102,6 +113,16 @@ export function CommandCenterHome({ snapshot }: CommandCenterHomeProps) {
               <p className="mt-2 text-sm text-[var(--muted)]">{github.message ?? "Fetching data..."}</p>
             </div>
           )}
+          {profile.socials.github ? (
+            <Link
+              href={profile.socials.github}
+              rel="noreferrer"
+              target="_blank"
+              className="mt-3 inline-block text-sm text-[var(--accent)]"
+            >
+              github.com/Tharun-GK →
+            </Link>
+          ) : null}
         </HudPanel>
 
         <HudPanel
@@ -112,14 +133,27 @@ export function CommandCenterHome({ snapshot }: CommandCenterHomeProps) {
         >
           <ul className="grid gap-2 sm:grid-cols-2">
             {QUICK_LINKS.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="flex items-center justify-between gap-2 border border-[rgba(79,212,238,0.12)] bg-[rgba(6,14,24,0.45)] px-3 py-2.5 text-sm hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                >
-                  {item.label}
-                  <span aria-hidden>→</span>
-                </Link>
+              <li key={`${item.label}-${item.href}`}>
+                {item.external || item.download ? (
+                  <a
+                    href={item.href}
+                    download={item.download}
+                    rel={item.external ? "noreferrer" : undefined}
+                    target={item.external ? "_blank" : undefined}
+                    className="flex items-center justify-between gap-2 border border-[rgba(79,212,238,0.12)] bg-[rgba(6,14,24,0.45)] px-3 py-2.5 text-sm hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  >
+                    {item.label}
+                    <span aria-hidden>→</span>
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="flex items-center justify-between gap-2 border border-[rgba(79,212,238,0.12)] bg-[rgba(6,14,24,0.45)] px-3 py-2.5 text-sm hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  >
+                    {item.label}
+                    <span aria-hidden>→</span>
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

@@ -120,7 +120,9 @@ export const projects: Project[] = [
         description: "Established simulated vitals, scoring, and dashboard alerting as the core loop.",
       },
     ],
-    links: {},
+    links: {
+      github: "https://github.com/Tharun-GK/GKS-CARE",
+    },
     images: {
       gallery: [],
     },

@@ -18,9 +18,23 @@ export default async function GitHubPage() {
           title="GitHub data temporarily unavailable."
           description={
             snapshot.message ??
-            "Configure GITHUB_USERNAME (and optionally GITHUB_TOKEN) to load live repositories."
+            "Live repository list could not be loaded. The profile is still https://github.com/Tharun-GK."
           }
         />
+      ) : null}
+
+      {snapshot.username ? (
+        <p className="mt-4 text-sm">
+          Profile:{" "}
+          <Link
+            href={`https://github.com/${snapshot.username}`}
+            rel="noreferrer"
+            target="_blank"
+            className="text-[var(--accent)] hover:underline"
+          >
+            https://github.com/{snapshot.username}
+          </Link>
+        </p>
       ) : null}
 
       {snapshot.repositories.length > 0 ? (

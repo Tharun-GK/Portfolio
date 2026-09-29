@@ -18,16 +18,18 @@ export interface GitHubSnapshot {
   message?: string;
 }
 
+const FALLBACK_USERNAME = "Tharun-GK";
+
 const FALLBACK_SNAPSHOT: GitHubSnapshot = {
   source: "fallback",
-  username: process.env.GITHUB_USERNAME || null,
+  username: process.env.GITHUB_USERNAME || FALLBACK_USERNAME,
   repositoryCount: 0,
   repositories: [],
   message: "GitHub data temporarily unavailable.",
 };
 
 export async function getGitHubSnapshot(): Promise<GitHubSnapshot> {
-  const username = process.env.GITHUB_USERNAME;
+  const username = process.env.GITHUB_USERNAME || FALLBACK_USERNAME;
 
   if (!username) {
     return {

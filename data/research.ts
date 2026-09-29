@@ -6,11 +6,12 @@ export const researchItems: ResearchItem[] = [
     title:
       "Suraksha-Astra: AI-Based Multimodal Cyber Safety and Content Moderation System",
     description:
-      "Research framing for a multimodal safety system that combines text and image detection with layered risk scoring and an explicit decision engine.",
-    role: "Author / system designer",
+      "Paper presented at ICAIB-2026. Research on an AI-based multimodal cyber safety and content moderation system.",
+    role: "Research Paper Presenter",
+    conference: "ICAIB-2026 International Conference",
     date: "2026",
-    status: "in-progress",
-    topics: ["cyber safety", "content moderation", "multimodal AI", "risk scoring"],
+    status: "presented",
+    topics: ["cyber safety", "content moderation", "multimodal AI"],
     relatedProjectSlug: "suraksha-astra",
   },
 ];

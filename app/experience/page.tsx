@@ -8,7 +8,7 @@ export default function ExperiencePage() {
   return (
     <PublicShell
       title="Experience"
-      description="Timeline of founding work and independent engineering. No internships or awards are listed unless they exist in the data files."
+      description="Internships, job simulation, and initiative work from portfolio records."
     >
       <ol className="relative grid gap-8 border-l border-[var(--border)] pl-6">
         {experienceItems.map((item) => (
