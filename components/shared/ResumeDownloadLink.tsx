@@ -10,7 +10,10 @@ export function ResumeDownloadLink({ className }: { className?: string }) {
     <a
       href={profile.resumeHref}
       download="Tharun-G-K-Resume.pdf"
-      className={cn("text-sm text-[var(--accent)] hover:underline", className)}
+      className={cn(
+        "inline-flex items-center border border-[var(--accent)] px-3 py-2 text-sm text-[var(--accent)] hover:bg-[rgba(79,212,238,0.12)]",
+        className,
+      )}
     >
       Download Resume
     </a>
